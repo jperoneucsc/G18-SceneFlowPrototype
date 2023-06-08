@@ -40,7 +40,7 @@ class Game extends Phaser.Scene {
             // If the score is new highscore, set it to highscore
             if(this.currentCount > this.highscore){
                 this.newScore = this.currentCount;
-            }
+            }else this.newScore = this.highscore;
             this.scene.start('Title', {data: this.newScore});
         });
     }
