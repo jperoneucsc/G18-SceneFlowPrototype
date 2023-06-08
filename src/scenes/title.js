@@ -59,7 +59,6 @@ class Title extends Phaser.Scene {
         let creditsButtonBack = this.add.image(700, 1080/1.35, 'creditsButtonBack').setScale(1.25).setInteractive().on('pointerover', () => {
             creditsButtonText.setScale(1);
         }).on('pointerdown', () => {
-            console.log("Hfdsajuhfdsa");
             this.cameras.main.fadeOut("1000");
             this.cameras.main.on('camerafadeoutcomplete', () => {
                 this.scene.start('Credits');
