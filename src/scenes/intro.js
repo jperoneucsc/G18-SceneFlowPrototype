@@ -10,6 +10,7 @@ class Intro extends Phaser.Scene {
     create() {
         this.cameras.main.fadeIn(2000);
 
+        this.highscore = 0;
 
         let background = this.add.image(0, 0, 'background').setOrigin(0,0).setInteractive();
 
@@ -29,7 +30,7 @@ class Intro extends Phaser.Scene {
         })
     
         this.cameras.main.on('camerafadeoutcomplete', () => {
-            this.scene.start('Title');
+            this.scene.start('Title', {data: 0});
         });
     }
 }

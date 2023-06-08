@@ -1,7 +1,11 @@
-
 class Title extends Phaser.Scene {
     constructor() {
         super('Title')
+    }
+
+    init(data)
+    {
+        this.score = data.data;
     }
 
     preload(){
@@ -16,7 +20,6 @@ class Title extends Phaser.Scene {
     create() {
         this.cameras.main.fadeIn(2000);
 
-
         let background = this.add.image(0, 0, 'background').setOrigin(0,0).setInteractive();
 
         // Initialize fonts
@@ -25,15 +28,16 @@ class Title extends Phaser.Scene {
 
         let title = this.add.text(700, 300, "[GAME TITLE]", style).setOrigin(.5,.5);       // Title 
         // Highscore and floating animation
-        let highScore = this.add.text(1400, 275, "Your high score: ~", style2).setOrigin(.5,.5).setRotation(.6);
+        this.highScore = this.add.text(1400, 275, "Your high score: " + this.score, style2).setOrigin(.5,.5).setRotation(.6);
         var tween = this.tweens.add({
-            targets: highScore,
+            targets: this.highScore,
             y: { start: 275, from: 280, to: 260},
             ease:'Power1',
             yoyo: true,
             repeat: -1,
             duration: 1000,
         })
+
 
         // Temporary asset in bottom right and rotating animation
         let tempAsset = this.add.plane(1450, 700, 'tempMenuAsset');
@@ -49,9 +53,19 @@ class Title extends Phaser.Scene {
         // Create play button back and text layer
         let playButtonBack = this.add.image(700, 1080/1.8, 'playButtonBack').setScale(1.6).setInteractive().on('pointerover', () => {
             playButtonText.setScale(1.3);
-        });;
+        }).on('pointerdown', () => {
+            this.cameras.main.fadeOut("1000");
+            this.cameras.main.on('camerafadeoutcomplete', () => {
+                this.scene.start('Game', {data: this.score});
+            });
+        });
         let playButtonText = this.add.image(700, 1080/1.8, 'playButtonText').setScale(1.6).setInteractive().on('pointerover', () => {
             playButtonText.setScale(1.3);
+        }).on('pointerdown', () => {
+            this.cameras.main.fadeOut("1000");
+            this.cameras.main.on('camerafadeoutcomplete', () => {
+                this.scene.start('Game', {data: this.score});
+            });
         });
 
 
